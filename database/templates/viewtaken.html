@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+            margin: 0;
+            display: flex;
+            flex-direction:center;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            flex-direction: column;
+            align-items:center;
+            margin-top: 70px;
+        }
+
+        .card {
+            width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            padding: 20px;
+            margin: 10px;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card label {
+            font-weight: bold;
+        }
+
+        .card p {
+            margin-bottom: 10px;
+        }
+
+        .card.completed {
+            background-color: #e0f2f1; /* Light Blue */
+        }
+
+        .card.incomplete {
+            background-color: #ffe0b2; /* Light Orange */
+        }
+
+        form {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        form label {
+            margin-right: 10px;
+        }
+
+        form input[type="search"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        form button {
+            padding: 8px 16px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #45a049;
+        }
+
+    </style>
+</head>
+<body>
+    <form action="/searchemp" method="post">
+        <label>Enter the name of the person to search: <input type="search" name="name" required></label>
+        <button type="submit">Search</button>
+    </form>
+    <div class="container">
+        {% if message %}
+        <p>{{message}}</p>
+        {% endif %}
+        {% if res %}
+        {% for i in res %}
+        <div class="card {% if i[2] == 'Completed' %}completed{% else %}incomplete{% endif %}">
+            <label>Roll NO of the student:</label>
+            <p>{{i[0]}}</p>
+            <label>Query:</label>
+            <p>{{i[1]}}</p>
+            <label>Completed or not?</label>
+            <p>{{i[2]}}</p>
+            {% if i[2] == 'Not Completed' %}
+            <label>Name of the Employee:</label>
+            <p>None</p>
+            {% else %}
+            <p>Taken by: {{ i[3] }}</p>
+            {% endif %}
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+</body>
+</html>

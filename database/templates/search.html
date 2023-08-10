@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px 0px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            font-size:20px;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Search Results</h1>
+        <form action="/searchdata" method="post">
+            <label for="rollno">Roll Number:</label>
+            <input type="text" id="rollno" name="rollno" value="{{ rollno }}">
+            <label for="hostel">Hostel:</label>
+            <input type="text" id="hostel" name="hostel" value="{{ hostel }}">
+            <!-- <label for="paid">Paid</label>
+            <input type="text" id="paid" name="paid" value="{{ paid }}" placeholder="List for paid or not paid" required> -->
+            <br><br>
+            <!-- <label for="filter_option">Filter Option:</label>
+            <input type="text" id="filter_option" name="filter_option" list="options">
+             <datalist id="options">
+                {% for option in filter_options %}
+                    <option value="{{ option[0] }}"></option>
+                {% endfor %}
+            </datalist>
+            <br><br> --> 
+            <button type="submit">Search</button>
+        </form>
+        
+        {% if results %}
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Year</th>
+                <th>Hostel</th>
+                <th>Amount to be paid</th>
+            </tr>
+            {% for result,ress in zip(results,res) %}
+            <tr>
+                <td>{{ result[0] }}</td>
+                <td>{{ result[1] }}</td>
+                <td>{{ result[2] }}</td>
+                <td>{{ress}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+        <p>{{message}}</p>
+    </div>
+</body>
+</html>

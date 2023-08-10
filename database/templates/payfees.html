@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hostel Fee Payment</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #007bff;
+            padding: 10px;
+            color: #fff;
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 90vh;
+        }
+
+        .form {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            min-width: 300px;
+            min-height: 60px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+
+        .button {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        .btn-submit {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .btn-submit:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <form action="/home" method="POST">
+            <input type="hidden" name="name" value="{{ name }}">
+            <input type="hidden" name="roll" value="{{ roll }}">
+            <button type="submit" class="btn-submit">Home</button>
+        </form>
+        <a href="/loader">Log out</a>
+    </div>
+    <div class="container">
+        {% if res[4] == 'yes' %}
+        <div>
+            <form action="/pay" method="POST" class="form">
+                <h1>Hostel Fee Payment</h1>
+                <h1>Mess Fees: {{ res[0] }}</h1>
+                <h1>Room Rent: {{ res[1] }}</h1>
+                <h1>Water Charge: {{ res[2] }}</h1>
+                <h1>Electricity Charge: {{ res[3] }}</h1>
+                <input type="hidden" name="roll" value="{{ roll }}">
+                <input type="hidden" name="name" value="{{ name }}">
+                <button type="submit" class="button">Pay Now</button>
+            </form>
+            <form action="/generatepdf" method="POST" class="form">
+                <input type="hidden" name="mess" value="{{ res[0] }}">
+                <input type="hidden" name="room" value="{{ res[1] }}">
+                <input type="hidden" name="water" value="{{ res[2] }}">
+                <input type="hidden" name="electricity" value="{{ res[3] }}">
+                <input type="hidden" name="name" value="{{ name }}">
+                <input type="hidden" name="roll" value="{{ roll }}">
+                <button type="submit" class="button">Generate PDF</button>
+            </form>
+        </div>
+        {% else %}
+        <form action="/home" method="POST" class="form">
+            <h1>Hostel Fee Payment</h1>
+            <p>You have already paid your fees. Thank you!</p>
+            <input type="hidden" name="roll" value="{{ roll }}">
+            <input type="hidden" name="name" value="{{ name }}">
+            <button type="submit" class="button">Go Back</button>
+        </form>
+        {% endif %}
+    </div>
+</body>
+</html>

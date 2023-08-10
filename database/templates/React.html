@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction:column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .card {
+            width: 400px;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        .card p {
+            margin-bottom: 10px;
+        }
+
+        .card label {
+            font-weight: bold;
+        }
+
+        .card form {
+            margin-top: 10px;
+        }
+
+        .card button {
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .card button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if message %}
+        <p>{{message}}</p>
+        {% endif %}
+        {%if res %}
+        {%for i in res %}
+        <div class="card">
+            <label>Roll no:</label>
+            <p>{{i[0]}}</p>
+            <label>Query:</label>
+            <p>{{i[1]}}</p>
+            <label>Completed or not?</label>
+            <p>{{i[2]}}</p>
+            <form>
+                <label>Name of the Employee: <input type="text" id="employeeName_{{i[0]}}" required></label>
+                <button type="submit" onclick="completed('{{i[0]}}','{{i[1]}}')">Completed</button>
+            </form>
+            <!-- <form  action="/complete" method="POST">
+                <input type="hidden" name="roll" value={{i[0]}}>
+                <input type="hidden" name="query" value={{i[1]}}>
+                <button type="submit">Completed</button>
+            </form> -->
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+
+    <!-- Include the Socket.IO client library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.1/socket.io.js"></script>
+
+
+    <!-- Add this script tag before Bootstrap's JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Then add the Bootstrap JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+
+        var socket = io();
+
+        function completed(roll,query){
+            var employeeNameInput = document.getElementById("employeeName_" + roll);
+            var employeeName = employeeNameInput.value;
+            console.log(roll);
+            console.log(query);
+            console.log("Employee Name:", employeeName);
+            socket.emit("complete_card",{"roll":roll,"query":query,"employeeName":employeeName});
+        }
+
+        socket.on("card_completed",function(data){
+            var res=data.res;
+            var message=data.message;
+
+            var container=document.querySelector(".container");
+            container.innerHTML = "";
+
+            if(message.length>0){
+                var messageParagraph = document.createElement("p");
+                messageParagraph.textContent = message;
+                container.appendChild(messageParagraph);
+            }
+
+            if(res.length>0){
+                for(var i=0;i<res.length;i++){
+                    var card = document.createElement("div");
+                    card.className = "card";
+                    card.setAttribute("data-roll",res[i][0]);
+                    card.setAttribute("data-query",res[i][1]);
+
+                    var rollLabel = document.createElement("label");
+                    rollLabel.textContent = "Roll no:";
+                    var rollParagraph = document.createElement("p");
+                    rollParagraph.textContent = res[i][0];
+
+                    var queryLabel = document.createElement("label");
+                    queryLabel.textContent = "Query:";
+                    var queryParagraph = document.createElement("p");
+                    queryParagraph.textContent = res[i][1];
+                
+                    var completedLabel = document.createElement("label");
+                    completedLabel.textContent = "Completed or not?";
+                    var completedParagraph = document.createElement("p");
+                    completedParagraph.textContent = res[i][2];
+
+                    var form = document.createElement("form");
+
+                    var nameLabel = document.createElement("label");
+                    nameLabel.textContent = "Name of the Employee:";
+                    var nameInput = document.createElement("input");
+                    nameInput.setAttribute("type", "text");
+                    nameInput.setAttribute("required", "required");
+                    nameInput.id = "employeeName_" + res[i][0];
+
+                    console.log(res[i][0]);
+                    console.log(res[i][1]);
+                    var button = document.createElement("button");
+                    button.setAttribute("type", "submit");
+                    button.textContent = "Completed";
+                    (function(index) {
+                        button.onclick = function(event) {
+                            event.preventDefault();
+                            completed(res[index][0], res[index][1]);
+                        };
+                    })(i);
+
+                    form.appendChild(nameLabel);
+                    form.appendChild(nameInput);
+                    form.appendChild(button);
+                    card.appendChild(rollLabel);
+                    card.appendChild(rollParagraph);
+                    card.appendChild(queryLabel);
+                    card.appendChild(queryParagraph);
+                    card.appendChild(completedLabel);
+                    card.appendChild(completedParagraph);
+                    card.appendChild(form);
+                    card.appendChild(button);
+
+                    container.appendChild(card);
+                }
+            }
+        });
+
+    </script>
+
+
+</body>
+</html>

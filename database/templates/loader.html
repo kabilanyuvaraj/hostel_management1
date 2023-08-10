@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <style>
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+
+        .loader-container {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .loader {
+            border: 8px solid transparent;
+            border-top-color: #007bff; /* Blue */
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-text {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #333;
+        }
+    </style> -->
+    <style>
+        .container {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+            -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                    justify-content: center;
+            min-height: 100vh;
+            background-color: #ededed;
+            }
+
+            .loader {
+            max-width: 15rem;
+            width: 100%;
+            height: auto;
+            stroke-linecap: round;
+            }
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                background-color: #ededed;
+                margin: 0;
+            }
+            circle {
+            fill: none;
+            stroke-width: 3.5;
+            /* -webkit-animation-name: preloader; */
+            animation-name: preloader;
+            /* -webkit-animation-duration: 3s; */
+            animation-duration: 3s;
+            /* -webkit-animation-iteration-count: infinite; */
+            animation-iteration-count: infinite;
+            /* -webkit-animation-timing-function: ease-in-out; */
+            animation-timing-function: ease-in-out;
+            /* -webkit-transform-origin: 170px 170px; */
+            transform-origin: 170px 170px;
+            will-change: transform;
+            }
+            circle:nth-of-type(1) {
+            stroke-dasharray: 550;
+            }
+            circle:nth-of-type(2) {
+            stroke-dasharray: 500;
+            }
+            circle:nth-of-type(3) {
+            stroke-dasharray: 450;
+            }
+            circle:nth-of-type(4) {
+            stroke-dasharray: 300;
+            }
+            circle:nth-of-type(1) {
+            /* -webkit-animation-delay: -0.15s; */
+            animation-delay: -0.15s;
+            }
+            circle:nth-of-type(2) {
+            /* -webkit-animation-delay: -0.3s; */
+                    animation-delay: -0.3s;
+            }
+            circle:nth-of-type(3) {
+            /* -webkit-animation-delay: -0.45s; */
+            /* -moz-animation-delay:  -0.45s; */
+            animation-delay: -0.45s;
+            }
+            circle:nth-of-type(4) {
+            /* -webkit-animation-delay: -0.6s;
+            -moz-animation-delay: -0.6s; */
+            animation-delay: -0.6s;
+            }
+
+            @-webkit-keyframes preloader {
+            50% {
+                /* -webkit-transform: rotate(360deg); */
+                transform: rotate(360deg);
+            }
+            }
+
+            @keyframes preloader {
+            50% {
+                /* -webkit-transform: rotate(360deg); */
+                transform: rotate(360deg);
+            }
+            }
+            .loading-text {
+                font-size: 20px;
+                fill: #333;
+                text-anchor: middle;
+                font-family: Arial, sans-serif;
+            }
+    </style>
+    <!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    <!-- <div class="loader-container">
+        <div class="loader"></div>
+        <p class="loading-text">Logging out...</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
+    
+    <svg class="loader" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 340">
+        <circle cx="170" cy="170" r="160" stroke="#E2007C"/>
+        <circle cx="170" cy="170" r="135" stroke="#404041"/>
+        <circle cx="170" cy="170" r="110" stroke="#E2007C"/>
+        <circle cx="170" cy="170" r="85" stroke="#404041"/>
+        <text x="170" y="190" class="loading-text">Logging out...</text>
+   </svg>
+    <script>
+        setTimeout(function() {
+            window.location.href = "/logout";
+        }, 3000); // 3 seconds loading time before redirecting to home.html
+    </script>
+</body>
+</html>

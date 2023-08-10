@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+    
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+    
+        form {
+            width: 90%;
+            max-width: 400px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+    
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px 0px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    
+        button:hover {
+            background-color: #0069d9;
+        }
+        .toastify-custom {
+            font-family:"Arial",sans-serif;
+            color:#fff;
+            border-radius:4px;
+            padding:12px;
+            bottom:20px !important;
+        }
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            font-weight: bold;
+            font-size:16px;
+            background-color: #007bff;;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            cursor: grab;
+            transition: opacity 0.3s ease;
+        }
+
+        .notification:hover {
+            opacity: 0.8;
+            cursor: pointer;
+        }
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js@2.1.3/dist/toastify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+</head>
+<body>
+    <div class="container">
+        <form action="/register" method="POST" id="loginForm">
+            <label>Name:</label>
+            <input type="text" name="name" required>
+
+            <label>Password:</label>
+            <input type="password" name="password" id="pass" placeholder="minimum 8 characters" required>
+
+            <label>Register No:</label>
+            <input type="text" name="rollno" required>
+
+            <label>Enter year of studying:</label>
+            <input type="text" name="year" required>
+
+            <label>Enter Hostel Name:</label>
+            <input type="text" name="hostelname" required>
+
+            <button type="submit">Register</button>
+        </form>
+        
+    </div>
+    <div id="mes">
+        {% if message %}
+        <p class="notification">{{message}}</p>
+        {% endif %}
+    </div>
+
+    <script>
+        function hid(){
+            const val = document.getElementById("mes");
+            val.style.display="none";
+        }
+        setTimeout(hid,5000);
+
+    </script>
+
+</body>
+</html>

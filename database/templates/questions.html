@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 10px;
+            margin: 0;
+        }
+        .container {
+            max-width: 500px;
+            margin: 100px auto; /* Add margin to create a gap */
+        }
+
+        .navbar {
+          display: flex;
+          justify-content: space-between;
+          background-color: #4caf50;
+          padding: 10px;
+          color: #fff;
+        }
+
+        .btn-submit {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .btn-submit:hover {
+            background-color: #45a049;
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+        }
+
+        .navbar a:hover {
+            background-color: #45a049;
+        }
+        .form {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        textarea {
+            width: 90%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            resize: vertical;
+        }
+
+        .button {
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            font-weight: bold;
+            font-size:16px;
+            background-color: #4caf50;;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            cursor: grab;
+            transition: opacity 0.3s ease;
+        }
+
+        .notification:hover {
+            opacity: 0.8;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <form action="/hom" method="POST">
+            <input type="hidden" name="name" value="{{ name }}">
+            <input type="hidden" name="roll" value="{{ roll }}">
+            <button type="submit" class="btn-submit">Home</button>
+        </form>
+        <a href="/loader">Log out</a>
+    </div>
+    <div class="container">
+        <form action="/sendtoadmin" method="post" class="form">
+            <input type="hidden" name="name" value={{name}}>
+            <input type="hidden" name="roll" value={{roll}}>
+            <label>Enter your query:</label>
+            <textarea rows="10" cols="20" placeholder="Enter not more than 50 characters" name="query" min="10" max="50"></textarea>
+            <button type="submit" class="button">Send</button>
+        </form>
+        <form action="/viewquery" method="post" class="form">
+            <input type="hidden" name="name" value={{name}}>
+            <input type="hidden" name="roll" value={{roll}}>
+            <button type="submit" class="button">View Your queries</button>
+        </form>
+    </div>
+    <div id="mes">
+        {% if message %}
+        <p class="notification">{{message}}</p>
+        {% endif %}
+    </div>
+    <script>
+        function hid(){
+            const val = document.getElementById("mes");
+            val.style.display="none";
+        }
+        setTimeout(hid,5000);
+    </script>
+</body>
+</html>
